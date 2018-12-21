@@ -1,15 +1,18 @@
 package ru.tinkoff.bpm;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Tester {
 
     private StringBuilder sb = new StringBuilder();
 
     public String testTexts() {
-        TextAnalyzer[] textAnalyzers = {
-            new SpamAnalyzer(SpamKeywordsFactory.build()),
-            new NegativeTextAnalyzer(NegativeKeywordsFactory.build()),
-            new TooLongTextAnalyzer(TooLongMaxLengthFactory.build())
-        };
+        List<TextAnalyzer> textAnalyzers = new ArrayList<>();
+        textAnalyzers.add(new SpamAnalyzer(SpamKeywordsFactory.build()));
+        textAnalyzers.add(new NegativeTextAnalyzer(NegativeKeywordsFactory.build()));
+        textAnalyzers.add(new TooLongTextAnalyzer(TooLongMaxLengthFactory.build()));
+
         for (String text : TextFactory.build()) {
             Label label = checkLabels(textAnalyzers, text);
             addCurrentString(text, label);
@@ -24,7 +27,7 @@ public class Tester {
             .append("\n\n");
     }
 
-    private Label checkLabels(TextAnalyzer[] analyzers, String text) {
+    private Label checkLabels(List<TextAnalyzer> analyzers, String text) {
         for (TextAnalyzer analyzer : analyzers) {
             Label label = analyzer.processText(text);
             if (label != Label.OK) {

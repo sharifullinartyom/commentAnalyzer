@@ -1,15 +1,17 @@
 package ru.tinkoff.bpm;
 
+import java.util.List;
+
 public class SpamAnalyzer extends KeywordAnalyzer {
 
-    private String[] keywords;
+    private List<String> keywords;
 
-    public SpamAnalyzer(String[] keywords) {
+    public SpamAnalyzer(List<String> keywords) {
         this.keywords = keywords;
     }
 
     @Override
-    protected String[] getKeywords() {
+    protected List<String> getKeywords() {
         return this.keywords;
     }
 
